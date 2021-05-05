@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class TransactionDTO {
+public class TransferMoneyDTO {
     private long id;
     private long receiverId;
     private double amount;

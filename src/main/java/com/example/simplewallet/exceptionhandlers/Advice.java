@@ -1,4 +1,4 @@
-package com.example.simplewallet.advices;
+package com.example.simplewallet.exceptionhandlers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
