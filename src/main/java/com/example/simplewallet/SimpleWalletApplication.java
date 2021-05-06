@@ -14,8 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SimpleWalletApplication {
 
 	//Repository is hardcoded
-	public static final Map<Long, Wallet> WALLETS = new ConcurrentHashMap<>();
-	public static final Map<Long, Transaction> TRANSACTIONS = new ConcurrentHashMap<>();
+	public static final Map<Long, Wallet> WALLETS = new HashMap<>();
+	public static final Map<Long, Transaction> TRANSACTIONS = new HashMap<>();
 
 	public static void main(String[] args) {
 		SpringApplication.run(SimpleWalletApplication.class, args);
