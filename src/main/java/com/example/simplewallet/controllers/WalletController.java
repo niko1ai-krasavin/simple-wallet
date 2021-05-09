@@ -71,13 +71,13 @@ public class WalletController {
     @DeleteMapping("/wallets/{id}/delete")
     public void deleteWallet(@PathVariable long id) {
         if (walletApiValidator.isWalletExist(id)) {
+            controllerLock.lock();
             try {
                 SimpleWalletApplication.WALLETS.remove(id);
             } finally {
                 controllerLock.unlock();
             }
         }
-        controllerLock.lock();
     }
 
     @PostMapping("wallets/{id}/transfer")
