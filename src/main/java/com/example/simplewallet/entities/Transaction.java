@@ -1,41 +1,43 @@
-package com.example.simplewallet.etities;
+package com.example.simplewallet.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
-public class Wallet {
+public class Transaction {
 
     private Long id;
-    private BigDecimal balance;
+    private Long receiverId;
+    private Long senderId;
+    private BigDecimal amount;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Wallet wallet = (Wallet) o;
+        Transaction that = (Transaction) o;
 
-        return id.equals(wallet.id);
+        return getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return getId().hashCode();
     }
 
     @Override
     public String toString() {
-        return "Wallet{" +
+        return "Transaction{" +
                 "id=" + id +
-                ", balance=" + balance +
+                ", receiverId=" + receiverId +
+                ", senderId=" + senderId +
+                ", amount=" + amount +
                 '}';
     }
 }

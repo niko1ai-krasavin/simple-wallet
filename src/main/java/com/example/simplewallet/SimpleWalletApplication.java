@@ -1,14 +1,15 @@
 package com.example.simplewallet;
 
-import com.example.simplewallet.etities.Transaction;
-import com.example.simplewallet.etities.Wallet;
+import com.example.simplewallet.entities.Transaction;
+import com.example.simplewallet.entities.Wallet;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.math.BigDecimal;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @SpringBootApplication
 public class SimpleWalletApplication {
@@ -26,5 +27,4 @@ public class SimpleWalletApplication {
 		wallet1.setBalance(new BigDecimal(0.00).setScale(2));
 		WALLETS.put(1L, wallet1);
 	}
-
 }

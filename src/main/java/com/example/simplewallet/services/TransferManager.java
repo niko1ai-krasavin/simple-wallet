@@ -2,8 +2,8 @@ package com.example.simplewallet.services;
 
 import com.example.simplewallet.SimpleWalletApplication;
 import com.example.simplewallet.dto.TransferMoneyDTO;
-import com.example.simplewallet.etities.Transaction;
-import com.example.simplewallet.etities.Wallet;
+import com.example.simplewallet.entities.Transaction;
+import com.example.simplewallet.entities.Wallet;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;

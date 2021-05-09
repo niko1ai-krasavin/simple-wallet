@@ -1,15 +1,12 @@
 package com.example.simplewallet.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class WalletDTO {
-    private long id;
-    private double balance;
+    private Long id;
+    private Double balance;
 }
