@@ -21,8 +21,6 @@ public class TransferManager {
     private TransferMoneyDTO request;
     private Transaction transaction;
 
-    private final ReentrantLock transactionRepoLock = new ReentrantLock(true);
-
     public Transaction doMoneyTransfer(long senderId, TransferMoneyDTO request) {
         this.senderId = senderId;
         this.request = request;
@@ -45,7 +43,7 @@ public class TransferManager {
         walletReceiver.setBalance(newBalanceOfReceiver);
         walletSender.setBalance(newBalanceOfSender);
 
-        transactionRepoLock.lock();
+        SimpleWalletApplication.TRANSACTIONS_REENTRANT_LOCK.lock();
         try {
             transaction = new Transaction(
                     (long) (SimpleWalletApplication.TRANSACTIONS.size() + 1),
@@ -55,7 +53,7 @@ public class TransferManager {
             );
             SimpleWalletApplication.TRANSACTIONS.put(transaction.getId(), transaction);
         } finally {
-            transactionRepoLock.unlock();
+            SimpleWalletApplication.TRANSACTIONS_REENTRANT_LOCK.unlock();
         }
     }
 }

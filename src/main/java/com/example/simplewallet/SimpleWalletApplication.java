@@ -10,9 +10,13 @@ import java.math.BigDecimal;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 @SpringBootApplication
 public class SimpleWalletApplication {
+
+	public static final ReentrantLock WALLETS_REENTRANT_LOCK = new ReentrantLock(true);
+	public static final ReentrantLock TRANSACTIONS_REENTRANT_LOCK = new ReentrantLock(true);
 
 	//Repository is hardcoded
 	public static final Map<Long, Wallet> WALLETS = new HashMap<>();

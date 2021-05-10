@@ -26,22 +26,20 @@ public class WalletController {
     @Autowired
     private WalletApiValidator walletApiValidator;
 
-    private final ReentrantLock controllerLock = new ReentrantLock(true);
-
     @GetMapping("/wallets")
     public Collection<Wallet> all() {
-        controllerLock.lock();
+        SimpleWalletApplication.WALLETS_REENTRANT_LOCK.lock();
         try {
             return SimpleWalletApplication.WALLETS.values();
         } finally {
-            controllerLock.unlock();
+            SimpleWalletApplication.WALLETS_REENTRANT_LOCK.unlock();
         }
     }
 
     @PostMapping("/wallets")
     public Wallet newWallet(@RequestBody WalletDTO walletDTO) {
         if (walletApiValidator.doWalletValidation(walletDTO)) {
-            controllerLock.lock();
+            SimpleWalletApplication.WALLETS_REENTRANT_LOCK.lock();
             try {
                 Wallet wallet = new Wallet();
                 wallet.setId((long) SimpleWalletApplication.WALLETS.size() + 1);
@@ -49,7 +47,7 @@ public class WalletController {
                 SimpleWalletApplication.WALLETS.put(wallet.getId(), wallet);
                 return SimpleWalletApplication.WALLETS.get(wallet.getId());
             } finally {
-                controllerLock.unlock();
+                SimpleWalletApplication.WALLETS_REENTRANT_LOCK.unlock();
             }
         }
         return null;
@@ -58,11 +56,11 @@ public class WalletController {
     @GetMapping("/wallets/{id}")
     public Wallet one(@PathVariable long id) {
         if (walletApiValidator.isWalletExist(id)) {
-            controllerLock.lock();
+            SimpleWalletApplication.WALLETS_REENTRANT_LOCK.lock();
             try {
                 return SimpleWalletApplication.WALLETS.get(id);
             } finally {
-                controllerLock.unlock();
+                SimpleWalletApplication.WALLETS_REENTRANT_LOCK.unlock();
             }
         }
         return null;
@@ -71,11 +69,11 @@ public class WalletController {
     @DeleteMapping("/wallets/{id}/delete")
     public void deleteWallet(@PathVariable long id) {
         if (walletApiValidator.isWalletExist(id)) {
-            controllerLock.lock();
+            SimpleWalletApplication.WALLETS_REENTRANT_LOCK.lock();
             try {
                 SimpleWalletApplication.WALLETS.remove(id);
             } finally {
-                controllerLock.unlock();
+                SimpleWalletApplication.WALLETS_REENTRANT_LOCK.unlock();
             }
         }
     }
@@ -86,11 +84,11 @@ public class WalletController {
                 walletApiValidator.isWalletExist(id) &&
                         walletApiValidator.doMoneyTransferValidation(transferMoneyDTO, id)
         ) {
-            controllerLock.lock();
+            SimpleWalletApplication.WALLETS_REENTRANT_LOCK.lock();
             try {
                 return transferManager.doMoneyTransfer(id, transferMoneyDTO);
             } finally {
-                controllerLock.unlock();
+                SimpleWalletApplication.WALLETS_REENTRANT_LOCK.unlock();
             }
         }
         return null;
