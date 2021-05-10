@@ -5,12 +5,12 @@ import com.example.simplewallet.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
-@RestControllerAdvice
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+@ControllerAdvice
 public class WalletApiExceptionHandler {
 
     @ResponseBody
@@ -24,20 +24,35 @@ public class WalletApiExceptionHandler {
             })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Advice doExceptionHandling(RuntimeException ex) {
-        return new Advice(ex.getMessage());
+        Advice advice = new Advice();
+        advice.setTimestamp(ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        advice.setStatus(400);
+        advice.setError("Bad Request");
+        advice.setMessage(ex.getMessage());
+        return advice;
     }
 
     @ResponseBody
     @ExceptionHandler(WalletNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     Advice doHandlingWalletNotFoundException(RuntimeException ex) {
-        return new Advice(ex.getMessage());
+        Advice advice = new Advice();
+        advice.setTimestamp(ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        advice.setStatus(404);
+        advice.setError("Not Found");
+        advice.setMessage(ex.getMessage());
+        return advice;
     }
 
     @ResponseBody
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Advice doHandlingHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        return new Advice("The request body is incorrect.");
+        Advice advice = new Advice();
+        advice.setTimestamp(ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        advice.setStatus(400);
+        advice.setError("Bad Request");
+        advice.setMessage(ex.getMessage());
+        return advice;
     }
 }
