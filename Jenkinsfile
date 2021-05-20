@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Deploy') {
              steps {
-                sh 'docker run --rm --name simple-wallet -d -p 8081:8080 simple-wallet'
+                sh 'docker run --rm -d -p 8081:8080'
             }
         }
     }
